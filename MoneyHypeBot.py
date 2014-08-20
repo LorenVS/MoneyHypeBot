@@ -106,7 +106,7 @@ def dv(message):
         if "-1" in num_msg:
             return "Could not convert string value '{}' to integer.".format([x for x in str_msg[2:] if convert2int(x) == "-1"])
         else:
-            return pkmnformula.calculate_dv(str_msg[1], pkmndict.pkmn[str_msg[0]][str_msg[1]], *num_msg)
+            return pkmnformula.calc_dv(str_msg[1], pkmndict.pkmn[str_msg[0]][str_msg[1]], *num_msg)
     else:
         return "Invalid number of arguments (expected 4 or 5 arguments, received '{}').".format(len_msg)
 
@@ -149,9 +149,27 @@ def dex(message):
     else:
         return "Invalid number of arguments (expected 2 arguments, received {}).".format(len_msg)
     
+
+faqs = {
+    '#werster' : 'http://pastebin.com/kiyRcY3x',
+    '#eekcast' : 'http://bombch.us/mPW',
+    '#moneyhypemike' : 'http://goo.gl/Le2x9r',
+    '#vincento341' : 'http://pastebin.com/m7ej5DVS',
+    '#gunnermaniac3' : 'http://pastebin.com/DT7BSWfu'
+}
+
+def faq(inputchan, message):
+    global timer
+    if inputchan in faqs and (time.time() - timer) > 60:
+        timer = time.time()
+        output("FAQ: %s" % faqs[inputchan], inputchan)
+
+
 # Initialization of the bot
 globalprotection()
 #globalemote()
+
+
 
 # Infinite loop to run the bot
 while True:
@@ -179,16 +197,11 @@ while True:
             elif inputmsg.startswith("$quit"):
                 quit(inputmsg, inputnick)
             elif inputmsg.startswith("$spin"):
-                spin(inputchan, inputmsg)                
+                spin(inputchan, inputmsg)   
+            elif "faq" in inputmsg.lower():
+                faq(inputchan, inputmsg)            
             
-            if inputchan == "#werster":                       
-                if "faq" in inputmsg.lower() and (time.time() - timer) > 60 and "http://pastebin.com/kiyRcY3x" not in inputmsg and inputnick != "moneyhypebot":
-                    output("FAQ: http://pastebin.com/kiyRcY3x", inputchan)
-                    #http://pastebin.com/kiyRcY3x
-                    #http://pastebin.com/AX5EGTfF
-                    #http://pastebin.com/S01Syiz0
-                    timer = time.time()
-                    
+            if inputchan == "#werster":                    
                 if "KevinTurtle" in inputmsg or "KevinSquirtle" in inputmsg or "WooperZ" in inputmsg:
                     counter += 1
                     if counter > 20:
@@ -202,19 +215,3 @@ while True:
                         counter = 0
                         emotes = ["KevinTurtle", "Jebaited"]
                         output(random.choice(emotes), inputchan)
-                        
-                if "faq" in inputmsg.lower() and (time.time() - timer) > 60 and "http://bombch.us/mPW" not in inputmsg and inputnick != "moneyhypebot":
-                    output("FAQ: http://bombch.us/mPW", inputchan)
-                    #http://bombch.us/mPW
-                    #http://pastebin.com/4GARS4N6
-                    timer = time.time()
-                    
-            elif inputchan == "#moneyhypemike":
-                if "faq" in inputmsg.lower() and (time.time() - timer) > 60 and "http://goo.gl/Le2x9r" not in inputmsg and inputnick != "moneyhypebot":
-                    output("FAQ: http://goo.gl/Le2x9r", inputchan)
-                    timer = time.time()
-
-            elif inputchan == "#vincento341":
-                if "faq" in inputmsg.lower() and (time.time() - timer) > 60 and "http://pastebin.com/m7ej5DVS" not in inputmsg and inputnick != "moneyhypebot":
-                    output("FAQ: http://pastebin.com/m7ej5DVS", inputchan)
-                    timer = time.time()
